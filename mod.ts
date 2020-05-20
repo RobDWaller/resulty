@@ -6,7 +6,7 @@ export function some(something: any): any {
   return something;
 }
 
-export function none(): null {
+export function none(): None {
   return null;
 }
 

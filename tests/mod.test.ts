@@ -16,7 +16,7 @@ Deno.test("Result Error Some", () => {
 });
 
 Deno.test("Result Error None", () => {
-  let resultError: Result<Err> = err(none);
+  let resultError: Result<Err> = err(none());
 
   assert(resultError.isError());
 });
@@ -25,4 +25,10 @@ Deno.test("Maybe Some", () => {
   let maybeSome: Maybe = maybe(some("Hello!"));
 
   assertEquals(maybeSome.unwrap(), "Hello!");
+});
+
+Deno.test("Maybe None", () => {
+  let maybeSome: Maybe = maybe(none());
+
+  assertEquals(maybeSome.unwrap(), null);
 });
