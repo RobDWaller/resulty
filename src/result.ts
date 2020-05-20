@@ -1,14 +1,12 @@
 import { Some, None } from "./some_none.ts";
 import { Unwrap } from "./unwrap.ts";
+import { Maybe } from "./maybe.ts";
 
 interface IsError {
   (): boolean;
 }
 
-export interface Err { 
-  readonly option: Some | None;
-  readonly unwrap: Unwrap<Some | None>;
-}
+export type Err = Maybe;
 
 export interface Result<T> {
   readonly state: T | Err;
