@@ -1,25 +1,19 @@
-import { Result, Ok, Err, Failure } from "./src/result.ts";
-import { Some, None } from "./src/some_none.ts";
-import { Maybe, Opt } from "./src/maybe.ts";
+import { Result, Ok, Err } from "./src/result.ts";
+import { Opt, None, Some } from "./src/option.ts";
 
-export function some(something: any): any {
-  return something;
+export function some<T>(something: T): Opt<T> {
+  return new Some<T>(something);
 }
 
-export function none(): None {
-  return null;
+export function none(): Opt<null> {
+  return new None();
 }
-
-export function maybe(option: Some | None): Maybe {
-  return new Opt(option);
-}
-
 export function ok<T>(result: T): Result<T> {
   return new Ok<T>(result);
 }
 
-export function err(error: Some | None): Result<Err> {
-  return new Failure(new Opt(error));
+export function err<T>(error: T): Result<T> {
+  return new Err<T>(error);
 }
 
-export { Result, Err, Maybe };
+export { Result, Err, Opt };
