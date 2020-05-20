@@ -1,5 +1,5 @@
 import { assert, assertEquals } from "https://deno.land/std/testing/asserts.ts";
-import { ok, Result, some, Err, err, none, Maybe, maybe } from "../mod.ts";
+import { ok, Result, some, err, Opt, none } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
   let resultOk: Result<string> = ok<string>("Hello");
@@ -8,27 +8,57 @@ Deno.test("Result Ok String", () => {
   assertEquals(resultOk.unwrap(), "Hello");
 });
 
-Deno.test("Result Error Some", () => {
-  let resultError: Result<Err> = err(some("Fail!"));
+Deno.test("Result Functional Ok String", () => {
+  let runResult = function (good: boolean): Result<String> {
+    if (good) {
+      return ok("Hello");
+    }
+    return err("Fail!");
+  };
+
+  let resultOk = runResult(true);
+
+  assert(!resultOk.isError());
+  assertEquals(resultOk.unwrap(), "Hello");
+});
+
+Deno.test("Result Error", () => {
+  let resultError: Result<string> = err("Fail!");
 
   assert(resultError.isError());
   assertEquals(resultError.unwrap(), "Fail!");
 });
 
-Deno.test("Result Error None", () => {
-  let resultError: Result<Err> = err(none());
+Deno.test("Result Functional Error", () => {
+  let runResult = function (good: boolean): Result<String> {
+    if (good) {
+      return ok("Hello");
+    }
+    return err("Fail!");
+  };
 
-  assert(resultError.isError());
+  let resultOk = runResult(false);
+
+  assert(resultOk.isError());
+  assertEquals(resultOk.unwrap(), "Fail!");
 });
 
-Deno.test("Maybe Some", () => {
-  let maybeSome: Maybe = maybe(some("Hello!"));
+Deno.test("Option Some", () => {
+  let maybeSome = function (): Opt<string> {
+    return some("Hello!");
+  };
 
-  assertEquals(maybeSome.unwrap(), "Hello!");
+  let result = maybeSome();
+
+  assertEquals(result.unwrap(), "Hello!");
 });
 
-Deno.test("Maybe None", () => {
-  let maybeSome: Maybe = maybe(none());
+Deno.test("Option None", () => {
+  let maybeNone = function (): Opt<null> {
+    return none();
+  };
 
-  assertEquals(maybeSome.unwrap(), null);
+  let result = maybeNone();
+
+  assertEquals(result.unwrap(), null);
 });
