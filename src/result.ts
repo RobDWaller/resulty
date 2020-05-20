@@ -1,15 +1,11 @@
-import { Some, None } from "./some_none.ts";
 import { Unwrap } from "./unwrap.ts";
-import { Maybe } from "./maybe.ts";
 
 interface IsError {
   (): boolean;
 }
 
-export type Err = Maybe;
-
 export interface Result<T> {
-  readonly state: T | Err;
+  readonly state: T;
   readonly unwrap: Unwrap<T>;
   readonly isError: IsError;
 }
@@ -18,30 +14,30 @@ export class Ok<T> {
   readonly state: T;
 
   constructor(state: T) {
-      this.state = state;
-  };
+    this.state = state;
+  }
 
   unwrap(): T {
-      return this.state;
+    return this.state;
   }
 
   isError(): boolean {
-      return false;
+    return false;
   }
 }
 
-export class Failure {
-  readonly state: Err;
+export class Err<T> {
+  readonly state: T;
 
-  constructor(state: Err) {
-      this.state = state;
-  };
+  constructor(state: T) {
+    this.state = state;
+  }
 
-  unwrap(): Some | None {
-      return this.state.unwrap();
+  unwrap(): T {
+    return this.state;
   }
 
   isError(): boolean {
-      return true;
+    return true;
   }
 }
