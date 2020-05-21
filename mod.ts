@@ -16,4 +16,4 @@ export function err<T>(error: T): Result<T> {
   return new Err<T>(error);
 }
 
-export { Result, Err, Opt };
+export { Result, Err, Opt, Some, None };
