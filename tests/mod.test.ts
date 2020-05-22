@@ -1,4 +1,8 @@
-import { assert, assertEquals, AssertionError } from "https://deno.land/std/testing/asserts.ts";
+import {
+  assert,
+  assertEquals,
+  AssertionError,
+} from "https://deno.land/std/testing/asserts.ts";
 import { ok, Result, some, err, Opt, none, Some, None } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
