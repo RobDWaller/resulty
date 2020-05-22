@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/robdwaller/resulty/workflows/ci/badge.svg)](https://github.com/robdwaller/resulty/actions)
+
 # Resulty
 
 Provides simple, Rust-like Result and Option objects for Deno.
