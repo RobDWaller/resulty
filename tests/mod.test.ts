@@ -1,16 +1,13 @@
 import {
-  assert,
-  assertEquals,
-  assertStrictEq,
-  AssertionError,
+  assertStrictEq
 } from "https://deno.land/std/testing/asserts.ts";
 import { ok, Result, some, err, Opt, none, Some, None } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
   let resultOk: Result<string> = ok<string>("Hello");
 
-  assert(!resultOk.isError());
-  assertEquals(resultOk.unwrap(), "Hello");
+  assertStrictEq(resultOk.isError(), false);
+  assertStrictEq(resultOk.unwrap(), "Hello");
 });
 
 Deno.test("Result Functional Ok String", () => {
@@ -23,8 +20,8 @@ Deno.test("Result Functional Ok String", () => {
 
   let resultOk = runResult(true);
 
-  assert(!resultOk.isError());
-  assertEquals(resultOk.unwrap(), "Hello");
+  assertStrictEq(resultOk.isError(), false);
+  assertStrictEq(resultOk.unwrap(), "Hello");
 });
 
 Deno.test("Result Functional Ok Integer, Error String", () => {
@@ -37,15 +34,15 @@ Deno.test("Result Functional Ok Integer, Error String", () => {
 
   let resultOk = runResult(true);
 
-  assert(!resultOk.isError());
-  assertEquals(resultOk.unwrap(), 3);
+  assertStrictEq(resultOk.isError(), false);
+  assertStrictEq(resultOk.unwrap(), 3);
 });
 
 Deno.test("Result Error", () => {
   let resultError: Result<string> = err("Fail!");
 
-  assert(resultError.isError());
-  assertEquals(resultError.unwrap(), "Fail!");
+  assertStrictEq(resultError.isError(), true);
+  assertStrictEq(resultError.unwrap(), "Fail!");
 });
 
 Deno.test("Result Functional Error", () => {
@@ -58,8 +55,8 @@ Deno.test("Result Functional Error", () => {
 
   let resultOk = runResult(false);
 
-  assert(resultOk.isError());
-  assertEquals(resultOk.unwrap(), "Fail!");
+  assertStrictEq(resultOk.isError(), true);
+  assertStrictEq(resultOk.unwrap(), "Fail!");
 });
 
 Deno.test("Option Some", () => {
@@ -69,7 +66,7 @@ Deno.test("Option Some", () => {
 
   let result = maybeSome();
 
-  assertEquals(result.unwrap(), "Hello!");
+  assertStrictEq(result.unwrap(), "Hello!");
 });
 
 Deno.test("Is instance of Some", () => {
@@ -79,11 +76,7 @@ Deno.test("Is instance of Some", () => {
 
   let result = maybeSome();
 
-  if (result instanceof Some) {
-    assert(true);
-  } else {
-    throw new AssertionError("Not instance of Some");
-  }
+  assertStrictEq(result instanceof Some, true);
 });
 
 Deno.test("Option None", () => {
@@ -93,7 +86,7 @@ Deno.test("Option None", () => {
 
   let result = maybeNone();
 
-  assertEquals(result.unwrap(), null);
+  assertStrictEq(result.unwrap(), null);
 });
 
 Deno.test("Option None", () => {
@@ -103,11 +96,7 @@ Deno.test("Option None", () => {
 
   let result = maybeNone();
 
-  if (result instanceof None) {
-    assert(true);
-  } else {
-    throw new AssertionError("Not instance of None");
-  }
+  assertStrictEq(result instanceof None, true);
 });
 
 Deno.test("Is instance of Some or None", () => {
@@ -121,19 +110,11 @@ Deno.test("Is instance of Some or None", () => {
 
   let something = maybeSome("Gary");
 
-  if (something instanceof Some) {
-    assert(true);
-  } else {
-    throw new AssertionError("Not instance of Some");
-  }
+  assertStrictEq(something instanceof Some, true);
   
   let nothing = maybeSome("Steve");
 
-  if (nothing instanceof None) {
-    assert(true);
-  } else {
-    throw new AssertionError("Not instance of Some");
-  }
+  assertStrictEq(nothing instanceof None, true);
 });
 
 Deno.test("Result Ok is ok", () => {
