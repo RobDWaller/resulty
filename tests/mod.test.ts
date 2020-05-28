@@ -110,6 +110,32 @@ Deno.test("Option None", () => {
   }
 });
 
+Deno.test("Is instance of Some or None", () => {
+  let maybeSome = function (name: string): Opt<string> {
+    if (name === "Gary") {
+      return some("Hello!");
+    }
+
+    return none();
+  };
+
+  let something = maybeSome("Gary");
+
+  if (something instanceof Some) {
+    assert(true);
+  } else {
+    throw new AssertionError("Not instance of Some");
+  }
+  
+  let nothing = maybeSome("Steve");
+
+  if (nothing instanceof None) {
+    assert(true);
+  } else {
+    throw new AssertionError("Not instance of Some");
+  }
+});
+
 Deno.test("Result Ok is ok", () => {
   let result = ok("Great!");
 
