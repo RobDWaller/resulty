@@ -11,7 +11,7 @@ Deno.test("Result Ok String", () => {
 });
 
 Deno.test("Result Functional Ok String", () => {
-  let runResult = function (good: boolean): Result<String> {
+  let runResult = function (good: boolean): Result<string> {
     if (good) {
       return ok("Hello");
     }
@@ -25,7 +25,7 @@ Deno.test("Result Functional Ok String", () => {
 });
 
 Deno.test("Result Functional Ok Integer, Error String", () => {
-  let runResult = function (good: boolean): Result<Number | String> {
+  let runResult = function (good: boolean): Result<number | string> {
     if (good) {
       return ok(3);
     }
@@ -46,7 +46,7 @@ Deno.test("Result Error", () => {
 });
 
 Deno.test("Result Functional Error", () => {
-  let runResult = function (good: boolean): Result<String> {
+  let runResult = function (good: boolean): Result<string> {
     if (good) {
       return ok("Hello");
     }
