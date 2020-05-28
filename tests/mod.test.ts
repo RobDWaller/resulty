@@ -1,6 +1,7 @@
 import {
   assert,
   assertEquals,
+  assertStrictEq,
   AssertionError,
 } from "https://deno.land/std/testing/asserts.ts";
 import { ok, Result, some, err, Opt, none, Some, None } from "../mod.ts";
@@ -107,4 +108,16 @@ Deno.test("Option None", () => {
   } else {
     throw new AssertionError("Not instance of None");
   }
+});
+
+Deno.test("Result Ok is ok", () => {
+  let result = ok("Great!");
+
+  assertStrictEq(result.isOk(), true);
+});
+
+Deno.test("Result Err is not ok", () => {
+  let result = err("Fail!");
+
+  assertStrictEq(result.isOk(), false);
 });

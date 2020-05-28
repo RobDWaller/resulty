@@ -1,13 +1,14 @@
 import { Unwrap } from "./unwrap.ts";
 
-interface IsError {
+interface Is {
   (): boolean;
 }
 
 export interface Result<T> {
   readonly state: T;
   readonly unwrap: Unwrap<T>;
-  readonly isError: IsError;
+  readonly isError: Is;
+  readonly isOk: Is;
 }
 
 export class Ok<T> {
@@ -24,6 +25,10 @@ export class Ok<T> {
   isError(): boolean {
     return false;
   }
+
+  isOk(): boolean {
+    return true;
+  }
 }
 
 export class Err<T> {
@@ -39,5 +44,9 @@ export class Err<T> {
 
   isError(): boolean {
     return true;
+  }
+
+  isOk(): boolean {
+    return false;
   }
 }
