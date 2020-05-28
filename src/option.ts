@@ -1,11 +1,13 @@
 import { Unwrap } from "./unwrap.ts";
 
-export interface Opt<T> {
+export type Opt<T> = Some<T> | None;
+
+interface Options<T> {
   readonly option: T | null;
   readonly unwrap: Unwrap<T>;
 }
 
-export class Some<T> {
+export class Some<T> implements Options<T> {
   readonly option: T;
 
   constructor(option: T) {
@@ -17,7 +19,7 @@ export class Some<T> {
   }
 }
 
-export class None {
+export class None implements Options<null> {
   readonly option = null;
 
   unwrap(): null {
