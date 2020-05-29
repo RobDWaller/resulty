@@ -1,5 +1,5 @@
 import {
-  assertStrictEq
+  assertStrictEq,
 } from "https://deno.land/std/testing/asserts.ts";
 import { ok, Result, some, err, Opt, none, Some, None } from "../mod.ts";
 
@@ -111,7 +111,7 @@ Deno.test("Is instance of Some or None", () => {
   let something = maybeSome("Gary");
 
   assertStrictEq(something instanceof Some, true);
-  
+
   let nothing = maybeSome("Steve");
 
   assertStrictEq(nothing instanceof None, true);
@@ -142,28 +142,28 @@ Deno.test("Result Example One", () => {
     }
     return err("Is not Sandra");
   };
-  
+
   let geoff = isSandra("Geoff");
-  
+
   assertStrictEq(geoff.unwrap(), "Is not Sandra");
 
   let sandra = isSandra("Sandra");
-  
+
   assertStrictEq(sandra.unwrap(), "Is Sandra");
 });
 
 Deno.test("Result Example Two", () => {
   let findNumber = function (toFind: number): Result<number | string> {
     let numbers = [1, 4, 6, 7, 21, 33];
-    
+
     if (numbers.includes(toFind)) {
       return ok(toFind);
     }
     return err(`Number: ${toFind} could not be found.`);
   };
-  
+
   let found = findNumber(6);
-  
+
   assertStrictEq(found.unwrap(), 6);
 
   let notFound = findNumber(9);
@@ -173,8 +173,8 @@ Deno.test("Result Example Two", () => {
 
 Deno.test("Option Example One", () => {
   let findRecord = function (id: number): Opt<string> {
-    let records = [{id: 1, value: "Hello"}, {id: 13, value: "World"}];
-    
+    let records = [{ id: 1, value: "Hello" }, { id: 13, value: "World" }];
+
     records = records.filter((item) => {
       return item.id === id;
     });
@@ -185,9 +185,9 @@ Deno.test("Option Example One", () => {
 
     return none();
   };
-  
+
   let found = findRecord(13);
-  
+
   assertStrictEq(found.unwrap(), "World");
 
   let notFound = findRecord(2);
