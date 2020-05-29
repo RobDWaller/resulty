@@ -103,11 +103,11 @@ let findRecord = function (id: number): Opt<string> {
   return none();
 };
 
-let found = findRecord(13);
+const found = findRecord(13);
 console.log(found.unwrap());
 // "World"
 
-let notFound = findRecord(2);
+const notFound = findRecord(2);
 console.log(notFound.unwrap());
 // null
 ```
