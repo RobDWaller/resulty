@@ -1,8 +1,5 @@
 import { Unwrap } from "./unwrap.ts";
-
-interface Is {
-  (): boolean;
-}
+import { Is } from "./is.ts";
 
 export interface Result<T> {
   readonly state: T;
