@@ -11,7 +11,7 @@ export interface Result<T> {
   isOk: Is;
 }
 
-export class Ok<T> {
+export class Ok<T> implements Result<T> {
   readonly state: T;
 
   constructor(state: T) {
@@ -31,7 +31,7 @@ export class Ok<T> {
   }
 }
 
-export class Err<T> {
+export class Err<T> implements Result<T> {
   readonly state: T;
 
   constructor(state: T) {
