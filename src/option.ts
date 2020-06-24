@@ -4,7 +4,7 @@ export type Opt<T> = Some<T> | None;
 
 interface Options<T> {
   readonly option: T | null;
-  readonly unwrap: Unwrap<T>;
+  unwrap: Unwrap<T>;
 }
 
 export class Some<T> implements Options<T> {

@@ -6,9 +6,9 @@ interface Is {
 
 export interface Result<T> {
   readonly state: T;
-  readonly unwrap: Unwrap<T>;
-  readonly isError: Is;
-  readonly isOk: Is;
+  unwrap: Unwrap<T>;
+  isError: Is;
+  isOk: Is;
 }
 
 export class Ok<T> {
