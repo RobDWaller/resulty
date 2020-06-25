@@ -13,7 +13,11 @@ Deno.test("Instance of Panic", () => {
 });
 
 Deno.test("Throws Panic", () => {
-  assertThrows(() => {
-    throw new Panic("Oh no!");
-  }, Panic, "Oh no!");
+  assertThrows(
+    () => {
+      throw new Panic("Oh no!");
+    },
+    Panic,
+    "Oh no!",
+  );
 });

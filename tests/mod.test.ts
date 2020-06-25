@@ -147,15 +147,23 @@ Deno.test("Is None", () => {
 Deno.test("Error Unwrap Panics", () => {
   const error = err("Error!");
 
-  assertThrows(() => {
-    error.unwrap();
-  }, Panic, "Error!");
+  assertThrows(
+    () => {
+      error.unwrap();
+    },
+    Panic,
+    "Error!",
+  );
 });
 
 Deno.test("Ok Unwrap Error Panics", () => {
   const cool = ok("All Cool");
 
-  assertThrows(() => {
-    cool.unwrapErr();
-  }, Panic, "All Cool");
+  assertThrows(
+    () => {
+      cool.unwrapErr();
+    },
+    Panic,
+    "All Cool",
+  );
 });
