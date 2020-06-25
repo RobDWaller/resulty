@@ -9,6 +9,7 @@ export function some<T>(something: T): Opt<T> {
 export function none(): Opt<null> {
   return new None();
 }
+
 export function ok<T>(result: T): Result<T> {
   return new Ok<T>(result);
 }
