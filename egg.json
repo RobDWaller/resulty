@@ -8,6 +8,7 @@
   "files": [
       "./mod.ts",
       "./src/**/*",
-      "./README.md"
+      "./README.md",
+      "./LICENSE.md"
   ]
 }
