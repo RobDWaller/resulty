@@ -21,7 +21,7 @@ export class Ok<T> implements Result<T> {
     return this.state;
   }
 
-  unwrapErr(): T {
+  unwrapErr(): void {
     throw new Panic(String(this.state));
   }
 
@@ -41,7 +41,7 @@ export class Err<T> implements Result<T> {
     this.state = state;
   }
 
-  unwrap(): T {
+  unwrap(): void {
     throw new Panic(String(this.state));
   }
 
