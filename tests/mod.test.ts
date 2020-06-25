@@ -128,3 +128,17 @@ Deno.test("Result Err is not ok", () => {
 
   assertStrictEq(result.isOk(), false);
 });
+
+Deno.test("Is Some", () => {
+  const isSome = some("Hello");
+
+  assertStrictEq(isSome.isSome(), true);
+  assertStrictEq(isSome.isNone(), false);
+});
+
+Deno.test("Is None", () => {
+  const isNone = none();
+
+  assertStrictEq(isNone.isNone(), true);
+  assertStrictEq(isNone.isSome(), false);
+});
