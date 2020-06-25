@@ -43,7 +43,9 @@ console.log(isOk.unwrap());
 
 Both Result and Option objects make an `unwrap()` method available. This method will return what is contained within the Result or Option object. 
 
-If the `unwrap()` method is called on an `Err` or `None` object it will panic, throw an instance of `Panic`. Instead if you would like to retrieve what is contained in the `Err` object use the method `unwrapErr()`. An instance of `None` will not contain anything, but in certain instances you may wish to unwrap a `None` without panicking, you can do this by calling `unwrapNone()`. 
+If the `unwrap()` method is called on an `Err` or `None` object it will panic, throw an instance of `Panic`. Instead if you would like to retrieve what is contained in the `Err` object use the method `unwrapErr()`. 
+
+An instance of `None` will not contain anything, but in certain instances you may wish to unwrap a `None` without panicking, you can do this by calling `unwrapNone()`. 
 
 ### Result
 
