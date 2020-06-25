@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/robdwaller/resulty/workflows/ci/badge.svg)](https://github.com/robdwaller/resulty/actions)
+[![Actions Status](https://github.com/robdwaller/resulty/workflows/ci/badge.svg)](https://github.com/robdwaller/resulty/actions) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/robdwaller/resulty) ![GitHub](https://img.shields.io/github/license/robdwaller/resulty) [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/resulty/mod.ts)
 
 # Resulty
 
@@ -8,7 +8,7 @@ Instead of throwing exceptions everywhere you can easily bubble up errors by ret
 
 The Option objects allow you to return a standard type where the result of a method maybe something or nothing.
 
-## Setup
+## Installation / Setup
 
 To add Resulty to your project simply import the `ok()`, `err()`, `some()` and `none()` methods along with the `Result<T>` and `Opt<T>` types from the Deno Land module.
 
@@ -21,7 +21,7 @@ import {
   Result, 
   Opt,
   Panic,
-} from "https://deno.land/x/resulty/mod.ts"
+} from "https://deno.land/x/resulty@0.3.0/mod.ts"
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ The core of the this library are the `ok()`, `err()`, `some()` and `none()` meth
 Both `Result<T>` and `Opt<T>` are wrappers for other types and objects. And you can access these contained types and objects via the `unwrap()` method.
 
 ```js
-import { Result, ok } from "https://deno.land/x/resulty/mod.ts";
+import { Result, ok } from "https://deno.land/x/resulty@0.3.0/mod.ts";
 
 const isOk: Result<string> = ok("Hello");
 
@@ -58,7 +58,7 @@ Available methods:
 
 In this example the code returns a `Result<string>`. As you see both the `ok()` and `err()` methods receive a string.
 ```js
-import { Result, ok, err } from "https://deno.land/x/resulty/mod.ts";
+import { Result, ok, err } from "https://deno.land/x/resulty@0.3.0/mod.ts";
 
 const isSandra = function (name: string): Result<string> {
   if (name === "Sandra") {
@@ -80,7 +80,7 @@ console.log(sandra.unwrap());
 A more advanced use case may involve a situation where the `ok()` method receives a number and the `err()` method receives a string. In this scenario you can reference a union type in the `Result<number | string>` return type.
 
 ```js
-import { Result, ok, err } from "https://deno.land/x/resulty/mod.ts";
+import { Result, ok, err } from "https://deno.land/x/resulty@0.3.0/mod.ts";
 
 const findNumber = function (toFind: number): Result<number | string> {
   const numbers = [1, 4, 6, 7, 21, 33];
@@ -114,7 +114,7 @@ Available methods:
 Options are useful in scenarios where a system failure hasn't occurred but either something or nothing can be returned. For instance when looking for a record in a data store of some kind.
 
 ```js
-import { Opt, some, none } from "https://deno.land/x/resulty/mod.ts";
+import { Opt, some, none } from "https://deno.land/x/resulty@0.3.0/mod.ts";
 
 let findRecord = function (id: number): Opt<string> {
   let records = [{id: 1, value: "Hello"}, {id: 13, value: "World"}];
