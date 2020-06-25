@@ -1,0 +1,13 @@
+{
+  "name": "resulty",
+  "description": "Provides simple, Rust-like Result and Option objects for Deno.",
+  "version": "0.3.0",
+  "entry": "./mod.ts",
+  "stable": false,
+  "repository": "https://github.com/robdwaller/resulty",
+  "files": [
+      "./mod.ts",
+      "./src/**/*",
+      "./README.md"
+  ]
+}
