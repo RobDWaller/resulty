@@ -87,17 +87,8 @@ Deno.test("Option None", () => {
 
   const result = maybeNone();
 
-  assertStrictEq(result.unwrap(), null);
-});
-
-Deno.test("Option None", () => {
-  const maybeNone = function (): Opt<null> {
-    return none();
-  };
-
-  const result = maybeNone();
-
   assertStrictEq(result instanceof None, true);
+  assertStrictEq(result.unwrapNone(), undefined);
 });
 
 Deno.test("Is instance of Some or None", () => {
@@ -165,5 +156,29 @@ Deno.test("Ok Unwrap Error Panics", () => {
     },
     Panic,
     "All Cool",
+  );
+});
+
+Deno.test("None Unwrap Panics", () => {
+  const nothing = none();
+
+  assertThrows(
+    () => {
+      nothing.unwrap();
+    },
+    Panic,
+    "Cannot unwrap None.",
+  );
+});
+
+Deno.test("Some Unwrap None Panics", () => {
+  const something = some("Something!");
+
+  assertThrows(
+    () => {
+      something.unwrapNone();
+    },
+    Panic,
+    "Something!",
   );
 });

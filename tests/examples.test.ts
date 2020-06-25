@@ -66,5 +66,5 @@ Deno.test("Option Example One", () => {
 
   const notFound = findRecord(2);
 
-  assertStrictEq(notFound.unwrap(), null);
+  assertStrictEq(notFound.unwrapNone(), undefined);
 });

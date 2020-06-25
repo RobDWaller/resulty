@@ -1,3 +1,3 @@
 export interface Unwrap<T> {
-  (): T;
+  (): T | void;
 }
