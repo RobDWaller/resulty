@@ -1,7 +1,8 @@
 import {
   assertStrictEq,
+  assertThrows,
 } from "https://deno.land/std@0.56.0/testing/asserts.ts";
-import { ok, Result, some, err, Opt, none, Some, None } from "../mod.ts";
+import { ok, Result, some, err, Opt, none, Some, None, Panic } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
   const resultOk: Result<string> = ok<string>("Hello");
@@ -42,7 +43,7 @@ Deno.test("Result Error", () => {
   const resultError: Result<string> = err("Fail!");
 
   assertStrictEq(resultError.isError(), true);
-  assertStrictEq(resultError.unwrap(), "Fail!");
+  assertStrictEq(resultError.unwrapErr(), "Fail!");
 });
 
 Deno.test("Result Functional Error", () => {
@@ -56,7 +57,7 @@ Deno.test("Result Functional Error", () => {
   const resultOk = runResult(false);
 
   assertStrictEq(resultOk.isError(), true);
-  assertStrictEq(resultOk.unwrap(), "Fail!");
+  assertStrictEq(resultOk.unwrapErr(), "Fail!");
 });
 
 Deno.test("Option Some", () => {
@@ -141,4 +142,20 @@ Deno.test("Is None", () => {
 
   assertStrictEq(isNone.isNone(), true);
   assertStrictEq(isNone.isSome(), false);
+});
+
+Deno.test("Error Unwrap Panics", () => {
+  const error = err("Error!");
+
+  assertThrows(() => {
+    error.unwrap();
+  }, Panic, "Error!");
+});
+
+Deno.test("Ok Unwrap Error Panics", () => {
+  const cool = ok("All Cool");
+
+  assertThrows(() => {
+    cool.unwrapErr();
+  }, Panic, "All Cool");
 });

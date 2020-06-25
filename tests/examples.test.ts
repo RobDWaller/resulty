@@ -19,7 +19,7 @@ Deno.test("Result Example One", () => {
 
   const geoff = isSandra("Geoff");
 
-  assertStrictEq(geoff.unwrap(), "Is not Sandra");
+  assertStrictEq(geoff.unwrapErr(), "Is not Sandra");
 
   const sandra = isSandra("Sandra");
 
@@ -42,7 +42,7 @@ Deno.test("Result Example Two", () => {
 
   const notFound = findNumber(9);
 
-  assertStrictEq(notFound.unwrap(), "Number: 9 could not be found.");
+  assertStrictEq(notFound.unwrapErr(), "Number: 9 could not be found.");
 });
 
 Deno.test("Option Example One", () => {
