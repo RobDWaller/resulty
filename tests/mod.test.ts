@@ -1,7 +1,4 @@
-import {
-  assertStrictEq,
-  assertThrows,
-} from "https://deno.land/std@0.56.0/testing/asserts.ts";
+import { assertStrictEq, assertThrows } from "../dev_deps.ts";
 import { ok, Result, some, err, Opt, none, Some, None, Panic } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
