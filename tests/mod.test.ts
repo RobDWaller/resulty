@@ -1,7 +1,5 @@
-import {
-  assertStrictEq,
-} from "https://deno.land/std/testing/asserts.ts";
-import { ok, Result, some, err, Opt, none, Some, None } from "../mod.ts";
+import { assertStrictEq, assertThrows } from "../dev_deps.ts";
+import { ok, Result, some, err, Opt, none, Some, None, Panic } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
   const resultOk: Result<string> = ok<string>("Hello");
@@ -42,7 +40,7 @@ Deno.test("Result Error", () => {
   const resultError: Result<string> = err("Fail!");
 
   assertStrictEq(resultError.isError(), true);
-  assertStrictEq(resultError.unwrap(), "Fail!");
+  assertStrictEq(resultError.unwrapErr(), "Fail!");
 });
 
 Deno.test("Result Functional Error", () => {
@@ -56,7 +54,7 @@ Deno.test("Result Functional Error", () => {
   const resultOk = runResult(false);
 
   assertStrictEq(resultOk.isError(), true);
-  assertStrictEq(resultOk.unwrap(), "Fail!");
+  assertStrictEq(resultOk.unwrapErr(), "Fail!");
 });
 
 Deno.test("Option Some", () => {
@@ -86,17 +84,8 @@ Deno.test("Option None", () => {
 
   const result = maybeNone();
 
-  assertStrictEq(result.unwrap(), null);
-});
-
-Deno.test("Option None", () => {
-  const maybeNone = function (): Opt<null> {
-    return none();
-  };
-
-  const result = maybeNone();
-
   assertStrictEq(result instanceof None, true);
+  assertStrictEq(result.unwrapNone(), undefined);
 });
 
 Deno.test("Is instance of Some or None", () => {
@@ -129,68 +118,64 @@ Deno.test("Result Err is not ok", () => {
   assertStrictEq(result.isOk(), false);
 });
 
-Deno.test("Generic Ok Example", () => {
-  const isOk: Result<string> = ok("Hello");
+Deno.test("Is Some", () => {
+  const isSome = some("Hello");
 
-  assertStrictEq(isOk.unwrap(), "Hello");
+  assertStrictEq(isSome.isSome(), true);
+  assertStrictEq(isSome.isNone(), false);
 });
 
-Deno.test("Result Example One", () => {
-  const isSandra = function (name: string): Result<string> {
-    if (name === "Sandra") {
-      return ok("Is Sandra");
-    }
-    return err("Is not Sandra");
-  };
+Deno.test("Is None", () => {
+  const isNone = none();
 
-  const geoff = isSandra("Geoff");
-
-  assertStrictEq(geoff.unwrap(), "Is not Sandra");
-
-  const sandra = isSandra("Sandra");
-
-  assertStrictEq(sandra.unwrap(), "Is Sandra");
+  assertStrictEq(isNone.isNone(), true);
+  assertStrictEq(isNone.isSome(), false);
 });
 
-Deno.test("Result Example Two", () => {
-  const findNumber = function (toFind: number): Result<number | string> {
-    const numbers = [1, 4, 6, 7, 21, 33];
+Deno.test("Error Unwrap Panics", () => {
+  const error = err("Error!");
 
-    if (numbers.includes(toFind)) {
-      return ok(toFind);
-    }
-    return err(`Number: ${toFind} could not be found.`);
-  };
-
-  const found = findNumber(6);
-
-  assertStrictEq(found.unwrap(), 6);
-
-  const notFound = findNumber(9);
-
-  assertStrictEq(notFound.unwrap(), "Number: 9 could not be found.");
+  assertThrows(
+    () => {
+      error.unwrap();
+    },
+    Panic,
+    "Error!",
+  );
 });
 
-Deno.test("Option Example One", () => {
-  const findRecord = function (id: number): Opt<string> {
-    let records = [{ id: 1, value: "Hello" }, { id: 13, value: "World" }];
+Deno.test("Ok Unwrap Error Panics", () => {
+  const cool = ok("All Cool");
 
-    records = records.filter((item) => {
-      return item.id === id;
-    });
+  assertThrows(
+    () => {
+      cool.unwrapErr();
+    },
+    Panic,
+    "All Cool",
+  );
+});
 
-    if (records.length === 1) {
-      return some(records[0].value);
-    }
+Deno.test("None Unwrap Panics", () => {
+  const nothing = none();
 
-    return none();
-  };
+  assertThrows(
+    () => {
+      nothing.unwrap();
+    },
+    Panic,
+    "Cannot unwrap None.",
+  );
+});
 
-  const found = findRecord(13);
+Deno.test("Some Unwrap None Panics", () => {
+  const something = some("Something!");
 
-  assertStrictEq(found.unwrap(), "World");
-
-  const notFound = findRecord(2);
-
-  assertStrictEq(notFound.unwrap(), null);
+  assertThrows(
+    () => {
+      something.unwrapNone();
+    },
+    Panic,
+    "Something!",
+  );
 });

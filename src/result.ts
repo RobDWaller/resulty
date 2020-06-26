@@ -1,17 +1,16 @@
 import { Unwrap } from "./unwrap.ts";
-
-interface Is {
-  (): boolean;
-}
+import { Is } from "./is.ts";
+import { Panic } from "./panic.ts";
 
 export interface Result<T> {
   readonly state: T;
-  readonly unwrap: Unwrap<T>;
-  readonly isError: Is;
-  readonly isOk: Is;
+  unwrap: Unwrap<T>;
+  unwrapErr: Unwrap<T>;
+  isError: Is;
+  isOk: Is;
 }
 
-export class Ok<T> {
+export class Ok<T> implements Result<T> {
   readonly state: T;
 
   constructor(state: T) {
@@ -20,6 +19,10 @@ export class Ok<T> {
 
   unwrap(): T {
     return this.state;
+  }
+
+  unwrapErr(): void {
+    throw new Panic(String(this.state));
   }
 
   isError(): boolean {
@@ -31,14 +34,18 @@ export class Ok<T> {
   }
 }
 
-export class Err<T> {
+export class Err<T> implements Result<T> {
   readonly state: T;
 
   constructor(state: T) {
     this.state = state;
   }
 
-  unwrap(): T {
+  unwrap(): void {
+    throw new Panic(String(this.state));
+  }
+
+  unwrapErr(): T {
     return this.state;
   }
 
