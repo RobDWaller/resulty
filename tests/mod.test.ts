@@ -85,7 +85,7 @@ Deno.test("Option None", () => {
   const result = maybeNone();
 
   assertStrictEq(result instanceof None, true);
-  assertStrictEq(result.unwrapNone(), undefined);
+  assertStrictEq(result.unwrapNone(), null);
 });
 
 Deno.test("Is instance of Some or None", () => {

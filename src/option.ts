@@ -1,5 +1,4 @@
 import { Unwrap } from "./unwrap.ts";
-import { Is } from "./is.ts";
 import { Panic } from "./panic.ts";
 
 export type Opt<T> = Some<T> | None;
@@ -8,8 +7,8 @@ interface Options<T> {
   readonly option: T | null;
   unwrap: Unwrap<T>;
   unwrapNone: Unwrap<T>;
-  isSome: Is;
-  isNone: Is;
+  isSome(): this is Some<T>;
+  isNone(): this is None;
 }
 
 export class Some<T> implements Options<T> {
@@ -27,11 +26,11 @@ export class Some<T> implements Options<T> {
     throw new Panic(String(this.option));
   }
 
-  isSome(): boolean {
+  isSome(): this is Some<T> {
     return true;
   }
 
-  isNone(): boolean {
+  isNone(): this is None {
     return false;
   }
 }
@@ -43,15 +42,15 @@ export class None implements Options<null> {
     throw new Panic("Cannot unwrap None.");
   }
 
-  unwrapNone(): void {
-    // Return nothing
+  unwrapNone(): null {
+    return null;
   }
 
-  isSome(): boolean {
+  isSome(): this is Some<null> {
     return false;
   }
 
-  isNone(): boolean {
+  isNone(): this is None {
     return true;
   }
 }

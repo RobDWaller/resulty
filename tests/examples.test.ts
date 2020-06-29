@@ -64,5 +64,55 @@ Deno.test("Option Example One", () => {
 
   const notFound = findRecord(2);
 
-  assertStrictEq(notFound.unwrapNone(), undefined);
+  assertStrictEq(notFound.unwrapNone(), null);
+});
+
+Deno.test("Result Handle Polymorphism Example", () => {
+  const isSandra = function (name: string): Result<string> {
+    if (name === "Sandra") {
+      return ok("Is Sandra");
+    }
+    return err("Is not Sandra");
+  };
+
+  function processResult(result: string): boolean {
+    return result === "Is Sandra";
+  }
+
+  const geoff: Result<string> = isSandra("Geoff");
+
+  if (geoff.isError()) {
+    assertStrictEq(processResult(geoff.unwrapErr()), false);
+  }
+
+  const sandra: Result<string> = isSandra("Sandra");
+
+  if (sandra.isOk()) {
+    assertStrictEq(processResult(sandra.unwrap()), true);
+  }
+});
+
+Deno.test("Option Handle Polymorphism Example", () => {
+  const hasSandra = function (name: string): Opt<string> {
+    if (name === "Sandra") {
+      return some("Has Sandra");
+    }
+    return none();
+  };
+
+  function processResult(result: string): boolean {
+    return result === "Has Sandra";
+  }
+
+  const geoff: Opt<string> = hasSandra("Geoff");
+
+  if (geoff.isNone()) {
+    assertStrictEq(geoff.unwrapNone(), null);
+  }
+
+  const sandra: Opt<string> = hasSandra("Sandra");
+
+  if (sandra.isSome()) {
+    assertStrictEq(processResult(sandra.unwrap()), true);
+  }
 });
