@@ -6,7 +6,7 @@ export function some<T>(something: T): Opt<T> {
   return new Some<T>(something);
 }
 
-export function none(): Opt<null> {
+export function none(): None {
   return new None();
 }
 
