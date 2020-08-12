@@ -1,4 +1,4 @@
-import { Unwrap } from "./unwrap.ts";
+import { Unwrap } from "./interfaces.ts";
 import { Panic } from "./panic.ts";
 
 export type Opt<T> = Some<T> | None;
