@@ -29,7 +29,7 @@ export class Ok<T> implements Result<T> {
   expect(message: string): T {
     return this.state;
   }
-  
+
   expectErr(message: string): void {
     throw new Panic(message + ": " + String(this.state));
   }
