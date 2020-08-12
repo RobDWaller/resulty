@@ -179,3 +179,21 @@ Deno.test("Some Unwrap None Panics", () => {
     "Something!",
   );
 });
+
+Deno.test("Ok Expects", () => {
+  const isOk = ok("All Good!");
+
+  assertStrictEquals(isOk.expect("Is Good!"), "All Good!");
+});
+
+Deno.test("Err Expects Panic", () => {
+  const isErr = err("Not Error!");
+
+  assertThrows(
+    () => {
+      isErr.expect("Oh No!");
+    },
+    Panic,
+    "Oh No! Not Error!",
+  );
+});
