@@ -194,6 +194,24 @@ Deno.test("Err Expects Panic", () => {
       isErr.expect("Oh No!");
     },
     Panic,
-    "Oh No! Not Error!",
+    "Oh No!: Not Error!",
   );
+});
+
+Deno.test("Ok Expects Error", () => {
+  const isOk = ok("All Good!");
+
+  assertThrows(
+    () => {
+      isOk.expectErr("Not Error");
+    },
+    Panic,
+    "Not Error: All Good!",
+  );
+});
+
+Deno.test("Error Expects Error", () => {
+  const isErr = err("Oh No!");
+
+  assertStrictEquals(isErr.expectErr("Is Error!"), "Oh No!");
 });

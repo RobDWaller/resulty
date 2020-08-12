@@ -6,6 +6,7 @@ export interface Result<T> {
   unwrap: Unwrap<T>;
   unwrapErr: Unwrap<T>;
   expect: Expect<T>;
+  expectErr: Expect<T>;
   isError(): this is Err<T>;
   isOk(): this is Ok<T>;
 }
@@ -27,6 +28,10 @@ export class Ok<T> implements Result<T> {
 
   expect(message: string): T {
     return this.state;
+  }
+  
+  expectErr(message: string): void {
+    throw new Panic(message + ": " + String(this.state));
   }
 
   isError(): this is Err<T> {
@@ -54,7 +59,11 @@ export class Err<T> implements Result<T> {
   }
 
   expect(message: string): void {
-    throw new Panic(message + " " + String(this.state));
+    throw new Panic(message + ": " + String(this.state));
+  }
+
+  expectErr(message: string): T {
+    return this.state;
   }
 
   isError(): this is Err<T> {
