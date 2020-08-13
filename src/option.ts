@@ -7,8 +7,8 @@ interface Options<T> {
   readonly option: T | null;
   unwrap: Unwrap<T>;
   unwrapNone: Unwrap<T>;
-  expect: Expect<T>
-  expectNone: Expect<T>
+  expect: Expect<T>;
+  expectNone: Expect<T>;
   isSome(): this is Some<T>;
   isNone(): this is None;
 }
