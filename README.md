@@ -2,7 +2,7 @@
 
 # Resulty
 
-Provides simple, Rust-like [Result](https://doc.rust-lang.org/std/result/enum.Result.html) and [Option](https://doc.rust-lang.org/std/option/enum.Option.html) objects for Deno. This provides an alternate approach to handling errors and mixed return types. 
+This library provides simple, Rust-like [Result](https://doc.rust-lang.org/std/result/enum.Result.html) and [Option](https://doc.rust-lang.org/std/option/enum.Option.html) objects for Deno. This provides an alternate approach to handling errors and mixed return types. 
 
 Instead of throwing exceptions everywhere you can easily bubble up errors by returning a `Result` type which is either an instance of `Ok` or `Err`. 
 
@@ -55,6 +55,8 @@ Available `Result<T>` methods:
 
 - `unwrap(): T | void;`
 - `unwrapErr(): T | void;`
+- `expect(message: string): T | void;`
+- `expectErr(message: string): T | void;`
 - `isOk(): boolean;`
 - `isErr(): boolean;`
 
@@ -111,6 +113,8 @@ Available `Opt<T>` methods:
 
 - `unwrap(): T | void;`
 - `unwrapNone(): T | void;`
+- `expect(message: string): T | void;`
+- `expectNone(message: string): T | void;`
 - `isSome(): boolean;`
 - `isNone(): boolean;`
 
@@ -139,5 +143,5 @@ console.log(found.unwrap());
 
 const notFound = findRecord(2);
 console.log(notFound.unwrapNone());
-// undefined
+// null
 ```
