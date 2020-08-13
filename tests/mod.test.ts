@@ -215,3 +215,39 @@ Deno.test("Error Expects Error", () => {
 
   assertStrictEquals(isErr.expectErr("Is Error!"), "Oh No!");
 });
+
+Deno.test("Some Expects", () => {
+  const something = some("Some value!");
+
+  assertStrictEquals(something.expect("Has value"), "Some value!");
+});
+
+Deno.test("None Expects Panic", () => {
+  const nothing = none();
+
+  assertThrows(
+    () => {
+      nothing.expect("Something");
+    },
+    Panic,
+    "Something",
+  );
+});
+
+Deno.test("Some Expects None", () => {
+  const something = some("Has something");
+
+  assertThrows(
+    () => {
+      something.expectNone("Is nothing");
+    },
+    Panic,
+    "Is nothing: Has something",
+  );
+});
+
+Deno.test("Error Expects Error", () => {
+  const nothing = none();
+
+  assertStrictEquals(nothing.expectNone("Is nothing"), null);
+});
