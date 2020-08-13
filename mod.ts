@@ -1,7 +1,8 @@
 /** 
  * The benefit of Options and Result objects is they enable the standardisation
  * of interfaces. This removes the need for mixed return types in code which
- * reduces the need for type checking.
+ * reduces the need for type checking. And it reduces the need to throw
+ * exceptions as errors can be bubbled up.
  * 
  * If a method generates either a string or null instead of returning either
  * of these types you can return an Option object.
