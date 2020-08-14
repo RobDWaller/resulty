@@ -1,12 +1,12 @@
-import { assertStrictEq, assertThrows } from "../dev_deps.ts";
+import { assertStrictEquals, assertThrows } from "../dev_deps.ts";
 import { Panic } from "../src/panic.ts";
 
 Deno.test("Instance of Panic", () => {
   const panic = new Panic("Oh no!");
 
-  assertStrictEq(panic instanceof Panic, true);
-  assertStrictEq(panic instanceof Error, true);
-  assertStrictEq(panic.name, "Panic");
+  assertStrictEquals(panic instanceof Panic, true);
+  assertStrictEquals(panic instanceof Error, true);
+  assertStrictEquals(panic.name, "Panic");
 });
 
 Deno.test("Throws Panic", () => {

@@ -1,11 +1,11 @@
-import { assertStrictEq, assertThrows } from "../dev_deps.ts";
+import { assertStrictEquals, assertThrows } from "../dev_deps.ts";
 import { ok, Result, some, err, Opt, none, Some, None, Panic } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
   const resultOk: Result<string> = ok<string>("Hello");
 
-  assertStrictEq(resultOk.isError(), false);
-  assertStrictEq(resultOk.unwrap(), "Hello");
+  assertStrictEquals(resultOk.isError(), false);
+  assertStrictEquals(resultOk.unwrap(), "Hello");
 });
 
 Deno.test("Result Functional Ok String", () => {
@@ -18,8 +18,8 @@ Deno.test("Result Functional Ok String", () => {
 
   const resultOk = runResult(true);
 
-  assertStrictEq(resultOk.isError(), false);
-  assertStrictEq(resultOk.unwrap(), "Hello");
+  assertStrictEquals(resultOk.isError(), false);
+  assertStrictEquals(resultOk.unwrap(), "Hello");
 });
 
 Deno.test("Result Functional Ok Integer, Error String", () => {
@@ -32,15 +32,15 @@ Deno.test("Result Functional Ok Integer, Error String", () => {
 
   const resultOk = runResult(true);
 
-  assertStrictEq(resultOk.isError(), false);
-  assertStrictEq(resultOk.unwrap(), 3);
+  assertStrictEquals(resultOk.isError(), false);
+  assertStrictEquals(resultOk.unwrap(), 3);
 });
 
 Deno.test("Result Error", () => {
   const resultError: Result<string> = err("Fail!");
 
-  assertStrictEq(resultError.isError(), true);
-  assertStrictEq(resultError.unwrapErr(), "Fail!");
+  assertStrictEquals(resultError.isError(), true);
+  assertStrictEquals(resultError.unwrapErr(), "Fail!");
 });
 
 Deno.test("Result Functional Error", () => {
@@ -53,8 +53,8 @@ Deno.test("Result Functional Error", () => {
 
   const resultOk = runResult(false);
 
-  assertStrictEq(resultOk.isError(), true);
-  assertStrictEq(resultOk.unwrapErr(), "Fail!");
+  assertStrictEquals(resultOk.isError(), true);
+  assertStrictEquals(resultOk.unwrapErr(), "Fail!");
 });
 
 Deno.test("Option Some", () => {
@@ -64,7 +64,7 @@ Deno.test("Option Some", () => {
 
   const result = maybeSome();
 
-  assertStrictEq(result.unwrap(), "Hello!");
+  assertStrictEquals(result.unwrap(), "Hello!");
 });
 
 Deno.test("Is instance of Some", () => {
@@ -74,7 +74,7 @@ Deno.test("Is instance of Some", () => {
 
   const result = maybeSome();
 
-  assertStrictEq(result instanceof Some, true);
+  assertStrictEquals(result instanceof Some, true);
 });
 
 Deno.test("Option None", () => {
@@ -84,8 +84,8 @@ Deno.test("Option None", () => {
 
   const result = maybeNone();
 
-  assertStrictEq(result instanceof None, true);
-  assertStrictEq(result.unwrapNone(), null);
+  assertStrictEquals(result instanceof None, true);
+  assertStrictEquals(result.unwrapNone(), null);
 });
 
 Deno.test("Is instance of Some or None", () => {
@@ -99,37 +99,37 @@ Deno.test("Is instance of Some or None", () => {
 
   const something = maybeSome("Gary");
 
-  assertStrictEq(something instanceof Some, true);
+  assertStrictEquals(something instanceof Some, true);
 
   const nothing = maybeSome("Steve");
 
-  assertStrictEq(nothing instanceof None, true);
+  assertStrictEquals(nothing instanceof None, true);
 });
 
 Deno.test("Result Ok is ok", () => {
   const result = ok("Great!");
 
-  assertStrictEq(result.isOk(), true);
+  assertStrictEquals(result.isOk(), true);
 });
 
 Deno.test("Result Err is not ok", () => {
   const result = err("Fail!");
 
-  assertStrictEq(result.isOk(), false);
+  assertStrictEquals(result.isOk(), false);
 });
 
 Deno.test("Is Some", () => {
   const isSome = some("Hello");
 
-  assertStrictEq(isSome.isSome(), true);
-  assertStrictEq(isSome.isNone(), false);
+  assertStrictEquals(isSome.isSome(), true);
+  assertStrictEquals(isSome.isNone(), false);
 });
 
 Deno.test("Is None", () => {
   const isNone = none();
 
-  assertStrictEq(isNone.isNone(), true);
-  assertStrictEq(isNone.isSome(), false);
+  assertStrictEquals(isNone.isNone(), true);
+  assertStrictEquals(isNone.isSome(), false);
 });
 
 Deno.test("Error Unwrap Panics", () => {
@@ -178,4 +178,76 @@ Deno.test("Some Unwrap None Panics", () => {
     Panic,
     "Something!",
   );
+});
+
+Deno.test("Ok Expects", () => {
+  const isOk = ok("All Good!");
+
+  assertStrictEquals(isOk.expect("Is Good!"), "All Good!");
+});
+
+Deno.test("Err Expects Panic", () => {
+  const isErr = err("Not Error!");
+
+  assertThrows(
+    () => {
+      isErr.expect("Oh No!");
+    },
+    Panic,
+    "Oh No!: Not Error!",
+  );
+});
+
+Deno.test("Ok Expects Error", () => {
+  const isOk = ok("All Good!");
+
+  assertThrows(
+    () => {
+      isOk.expectErr("Not Error");
+    },
+    Panic,
+    "Not Error: All Good!",
+  );
+});
+
+Deno.test("Error Expects Error", () => {
+  const isErr = err("Oh No!");
+
+  assertStrictEquals(isErr.expectErr("Is Error!"), "Oh No!");
+});
+
+Deno.test("Some Expects", () => {
+  const something = some("Some value!");
+
+  assertStrictEquals(something.expect("Has value"), "Some value!");
+});
+
+Deno.test("None Expects Panic", () => {
+  const nothing = none();
+
+  assertThrows(
+    () => {
+      nothing.expect("Something");
+    },
+    Panic,
+    "Something",
+  );
+});
+
+Deno.test("Some Expects None", () => {
+  const something = some("Has something");
+
+  assertThrows(
+    () => {
+      something.expectNone("Is nothing");
+    },
+    Panic,
+    "Is nothing: Has something",
+  );
+});
+
+Deno.test("Error Expects Error", () => {
+  const nothing = none();
+
+  assertStrictEquals(nothing.expectNone("Is nothing"), null);
 });

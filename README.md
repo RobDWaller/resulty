@@ -2,15 +2,13 @@
 
 # Resulty
 
-Provides simple, Rust-like [Result](https://doc.rust-lang.org/std/result/enum.Result.html) and [Option](https://doc.rust-lang.org/std/option/enum.Option.html) objects for Deno. This provides an alternate approach to handling errors and mixed return types. 
+This library provides Rust-like [Result](https://doc.rust-lang.org/std/result/enum.Result.html) and [Option](https://doc.rust-lang.org/std/option/enum.Option.html) objects for Deno. It makes error handling easier by reducing side effects and removes the need for mixed return types. 
 
-Instead of throwing exceptions everywhere you can easily bubble up errors by returning a `Result` type which is either an instance of `Ok` or `Err`. 
-
-The Option objects allow you to return a standard type where the result of a method maybe something or nothing.
+Instead of throwing exceptions everywhere you can easily bubble up errors by returning a `Result` type which is either an instance of `Ok` or `Err`. And the Option objects allow you to return a standard type where the result of a method maybe something or nothing.
 
 ## Installation / Setup
 
-To add Resulty to your project simply import the `ok()`, `err()`, `some()` and `none()` methods along with the `Result<T>` and `Opt<T>` types from `https://deno.land/x/resulty@0.3.1/mod.ts`.
+To add Resulty to your project import the `ok()`, `err()`, `some()` and `none()` methods along with the `Result<T>` and `Opt<T>` types from `https://deno.land/x/resulty@0.4.0/mod.ts`.
 
 ```js
 import { 
@@ -21,7 +19,7 @@ import {
   Result, 
   Opt,
   Panic,
-} from "https://deno.land/x/resulty@0.3.1/mod.ts"
+} from "https://deno.land/x/resulty@0.4.0/mod.ts"
 ```
 
 ## Usage
@@ -31,7 +29,7 @@ The core functionality of the this library is contained in the `ok()`, `err()`, 
 Both `Result<T>` and `Opt<T>` are wrappers for other types and objects. And you can access these contained types and objects via the `unwrap()` method.
 
 ```js
-import { Result, ok } from "https://deno.land/x/resulty@0.3.1/mod.ts";
+import { Result, ok } from "https://deno.land/x/resulty@0.4.0/mod.ts";
 
 const isOk: Result<string> = ok("Hello");
 
@@ -55,13 +53,15 @@ Available `Result<T>` methods:
 
 - `unwrap(): T | void;`
 - `unwrapErr(): T | void;`
+- `expect(message: string): T | void;`
+- `expectErr(message: string): T | void;`
 - `isOk(): boolean;`
 - `isErr(): boolean;`
 
 In this example the code returns a `Result<string>`. As you can see both the `ok()` and `err()` methods receive a string.
 
 ```js
-import { Result, ok, err } from "https://deno.land/x/resulty@0.3.1/mod.ts";
+import { Result, ok, err } from "https://deno.land/x/resulty@0.4.0/mod.ts";
 
 const isSandra = function (name: string): Result<string> {
   if (name === "Sandra") {
@@ -83,7 +83,7 @@ console.log(sandra.unwrap());
 A more advanced use case may involve a situation where the `ok()` method receives a number and the `err()` method receives a string. In this scenario you can reference a union type in the `Result<number | string>` return type.
 
 ```js
-import { Result, ok, err } from "https://deno.land/x/resulty@0.3.1/mod.ts";
+import { Result, ok, err } from "https://deno.land/x/resulty@0.4.0/mod.ts";
 
 const findNumber = function (toFind: number): Result<number | string> {
   const numbers = [1, 4, 6, 7, 21, 33];
@@ -111,13 +111,15 @@ Available `Opt<T>` methods:
 
 - `unwrap(): T | void;`
 - `unwrapNone(): T | void;`
+- `expect(message: string): T | void;`
+- `expectNone(message: string): T | void;`
 - `isSome(): boolean;`
 - `isNone(): boolean;`
 
 Options are useful in scenarios where a system failure hasn't occurred but either something or nothing can be returned. For instance when looking for a record in a data store of some kind.
 
 ```js
-import { Opt, some, none } from "https://deno.land/x/resulty@0.3.1/mod.ts";
+import { Opt, some, none } from "https://deno.land/x/resulty@0.4.0/mod.ts";
 
 let findRecord = function (id: number): Opt<string> {
   let records = [{id: 1, value: "Hello"}, {id: 13, value: "World"}];
@@ -139,5 +141,5 @@ console.log(found.unwrap());
 
 const notFound = findRecord(2);
 console.log(notFound.unwrapNone());
-// undefined
+// null
 ```

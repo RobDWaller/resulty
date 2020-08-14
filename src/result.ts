@@ -1,10 +1,12 @@
-import { Unwrap } from "./unwrap.ts";
+import { Unwrap, Expect } from "./interfaces.ts";
 import { Panic } from "./panic.ts";
 
 export interface Result<T> {
   readonly state: T;
   unwrap: Unwrap<T>;
   unwrapErr: Unwrap<T>;
+  expect: Expect<T>;
+  expectErr: Expect<T>;
   isError(): this is Err<T>;
   isOk(): this is Ok<T>;
 }
@@ -22,6 +24,14 @@ export class Ok<T> implements Result<T> {
 
   unwrapErr(): void {
     throw new Panic(String(this.state));
+  }
+
+  expect(message: string): T {
+    return this.state;
+  }
+
+  expectErr(message: string): void {
+    throw new Panic(message + ": " + String(this.state));
   }
 
   isError(): this is Err<T> {
@@ -45,6 +55,14 @@ export class Err<T> implements Result<T> {
   }
 
   unwrapErr(): T {
+    return this.state;
+  }
+
+  expect(message: string): void {
+    throw new Panic(message + ": " + String(this.state));
+  }
+
+  expectErr(message: string): T {
     return this.state;
   }
 

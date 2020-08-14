@@ -1,10 +1,10 @@
-import { assertStrictEq } from "../dev_deps.ts";
+import { assertStrictEquals } from "../dev_deps.ts";
 import { ok, Result, some, err, Opt, none } from "../mod.ts";
 
 Deno.test("Generic Ok Example", () => {
   const isOk: Result<string> = ok("Hello");
 
-  assertStrictEq(isOk.unwrap(), "Hello");
+  assertStrictEquals(isOk.unwrap(), "Hello");
 });
 
 Deno.test("Result Example One", () => {
@@ -17,11 +17,11 @@ Deno.test("Result Example One", () => {
 
   const geoff = isSandra("Geoff");
 
-  assertStrictEq(geoff.unwrapErr(), "Is not Sandra");
+  assertStrictEquals(geoff.unwrapErr(), "Is not Sandra");
 
   const sandra = isSandra("Sandra");
 
-  assertStrictEq(sandra.unwrap(), "Is Sandra");
+  assertStrictEquals(sandra.unwrap(), "Is Sandra");
 });
 
 Deno.test("Result Example Two", () => {
@@ -36,11 +36,11 @@ Deno.test("Result Example Two", () => {
 
   const found = findNumber(6);
 
-  assertStrictEq(found.unwrap(), 6);
+  assertStrictEquals(found.unwrap(), 6);
 
   const notFound = findNumber(9);
 
-  assertStrictEq(notFound.unwrapErr(), "Number: 9 could not be found.");
+  assertStrictEquals(notFound.unwrapErr(), "Number: 9 could not be found.");
 });
 
 Deno.test("Option Example One", () => {
@@ -60,11 +60,11 @@ Deno.test("Option Example One", () => {
 
   const found = findRecord(13);
 
-  assertStrictEq(found.unwrap(), "World");
+  assertStrictEquals(found.unwrap(), "World");
 
   const notFound = findRecord(2);
 
-  assertStrictEq(notFound.unwrapNone(), null);
+  assertStrictEquals(notFound.unwrapNone(), null);
 });
 
 Deno.test("Result Handle Polymorphism Example", () => {
@@ -82,13 +82,13 @@ Deno.test("Result Handle Polymorphism Example", () => {
   const geoff: Result<string> = isSandra("Geoff");
 
   if (geoff.isError()) {
-    assertStrictEq(processResult(geoff.unwrapErr()), false);
+    assertStrictEquals(processResult(geoff.unwrapErr()), false);
   }
 
   const sandra: Result<string> = isSandra("Sandra");
 
   if (sandra.isOk()) {
-    assertStrictEq(processResult(sandra.unwrap()), true);
+    assertStrictEquals(processResult(sandra.unwrap()), true);
   }
 });
 
@@ -107,12 +107,12 @@ Deno.test("Option Handle Polymorphism Example", () => {
   const geoff: Opt<string> = hasSandra("Geoff");
 
   if (geoff.isNone()) {
-    assertStrictEq(geoff.unwrapNone(), null);
+    assertStrictEquals(geoff.unwrapNone(), null);
   }
 
   const sandra: Opt<string> = hasSandra("Sandra");
 
   if (sandra.isSome()) {
-    assertStrictEq(processResult(sandra.unwrap()), true);
+    assertStrictEquals(processResult(sandra.unwrap()), true);
   }
 });
