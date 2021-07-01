@@ -1,5 +1,5 @@
 import { assertStrictEquals, assertThrows } from "../dev_deps.ts";
-import { ok, Result, some, err, Opt, none, Some, None, Panic } from "../mod.ts";
+import { err, None, none, ok, Opt, Panic, Result, Some, some } from "../mod.ts";
 
 Deno.test("Result Ok String", () => {
   const resultOk: Result<string> = ok<string>("Hello");

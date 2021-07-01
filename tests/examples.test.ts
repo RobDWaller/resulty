@@ -1,5 +1,5 @@
 import { assertStrictEquals } from "../dev_deps.ts";
-import { ok, Result, some, err, Opt, none } from "../mod.ts";
+import { err, none, ok, Opt, Result, some } from "../mod.ts";
 
 Deno.test("Generic Ok Example", () => {
   const isOk: Result<string> = ok("Hello");
