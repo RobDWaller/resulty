@@ -6,9 +6,9 @@
   "stable": false,
   "repository": "https://github.com/robdwaller/resulty",
   "files": [
-      "./mod.ts",
-      "./src/**/*",
-      "./README.md",
-      "./LICENSE.md"
+    "./mod.ts",
+    "./src/**/*",
+    "./README.md",
+    "./LICENSE.md"
   ]
 }

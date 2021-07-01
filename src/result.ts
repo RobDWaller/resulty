@@ -1,4 +1,4 @@
-import { Unwrap, Expect } from "./interfaces.ts";
+import { Expect, Unwrap } from "./interfaces.ts";
 import { Panic } from "./panic.ts";
 
 export interface Result<T> {
